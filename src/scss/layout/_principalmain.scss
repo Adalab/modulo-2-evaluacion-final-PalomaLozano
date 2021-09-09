@@ -1,0 +1,34 @@
+.principalContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  padding: 30px;
+  background-color: rgb(190, 73, 73);
+}
+
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 200px;
+  height: 250px;
+  color: bisque;
+
+  .searchInput {
+    font-size: 15px;
+    height: 30px;
+    color: bisque;
+    background-color: rgb(224, 94, 94);
+    text-align: center;
+    border-radius: 15px;
+  }
+}
+
+.buttonSearch {
+  border-radius: 15px;
+  height: 30px;
+  background-color: rgb(224, 94, 94);
+  color: bisque;
+  font-size: 15px;
+  margin-top: 20px;
+}
