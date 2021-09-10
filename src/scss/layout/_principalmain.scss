@@ -1,34 +1,52 @@
-.principalContainer {
+body {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  padding: 30px;
+  height: 100%;
+  padding: 40px;
   background-color: rgb(190, 73, 73);
 }
-
+.principalContainer {
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
 .searchContainer {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 200px;
-  height: 250px;
+
   color: bisque;
 
   .searchInput {
-    font-size: 15px;
-    height: 30px;
+    font-size: 25px;
+    height: 50px;
     color: bisque;
     background-color: rgb(224, 94, 94);
     text-align: center;
-    border-radius: 15px;
+    margin-bottom: 20px;
+    padding: 5px;
   }
 }
 
 .buttonSearch {
   border-radius: 15px;
-  height: 30px;
+  height: 40px;
+  width: 150px;
   background-color: rgb(224, 94, 94);
   color: bisque;
   font-size: 15px;
-  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.title_list_title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background-color: bisque;
+  color: rgb(224, 94, 94);
+  margin-top: 40px;
+  font-size: 18px;
+  margin-bottom: 40px;
 }

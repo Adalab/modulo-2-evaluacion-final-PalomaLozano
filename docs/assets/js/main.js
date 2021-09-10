@@ -1,1 +1,1 @@
-"use strict";console.log(">> Ready :)");
+"use strict";const inputSearch=document.querySelector(".js_search_input"),buttonSearch=document.querySelector(".js_button_search"),listTitles=document.querySelector(".js_ul_titles");let tvListData=[],writeUser=inputSearch.value;function handleTvSearch(){let t="";for(let e of tvListData)t+=`<li class="title_list">${e.name}</li>`;listTitles.innerHTML=t}fetch("//api.tvmaze.com/search/shows?q=:"+writeUser).then(t=>t.json()).then(t=>{tvListData=t,console.log(tvListData)}),buttonSearch.addEventListener("click",handleTvSearch);

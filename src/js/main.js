@@ -5,41 +5,34 @@ const buttonSearch = document.querySelector('.js_button_search'); //variable glo
 const listTitles = document.querySelector('.js_ul_titles');
 
 let tvListData = [];
-let writeUser = inputSearch.value;
 
-//function handleInput() {
-//inputSearch.classList.toggle('js_ul_titles');
-//} no sé si es útil
-
-function handleTvSearch() {
+function handleTvPaintedList() {
   let putHTML = '';
-  //if (writeUser === true) {
-  for (let tvTitles of tvListData) {
-    putHTML += `<li class="title_list">${tvTitles.name}</li>`;
-    //console.log(tvTitles);
-  }
-  //}
-  //else {
-  //  putHTML = `<li class="title_list">'No results'</li>`;
-  // }
 
+  for (let tvTitles of tvListData) {
+    putHTML += `<li class="title_list_title">${tvTitles.show.name}`;
+    if (tvTitles.show.image) {
+      putHTML += `<img src="${tvTitles.show.image.medium}" class="title_list"></li>`;
+    } else {
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
+    }
+
+    console.log(tvTitles);
+  }
   listTitles.innerHTML = putHTML;
 }
 
-fetch('//api.tvmaze.com/search/shows?q=:' + writeUser)
-  .then((response) => response.json())
-  .then((data) => {
-    tvListData = data; //preguntar por el atributo del array
-    console.log(tvListData);
-    //esto son funciones que debo de crear y de añadir aquí
-
-    //handleTvPaintedList();
-
-    //handleTvFavoriteSeries();
-  });
-
+function handleTvSearch(ev) {
+  let textUser = inputSearch.value;
+  fetch('//api.tvmaze.com/search/shows?q=' + textUser)
+    .then((response) => response.json())
+    .then((data) => {
+      tvListData = data;
+      handleTvPaintedList();
+      ev.preventdefault(ev);
+      //handleTvFavoriteSeries();
+    });
+}
 //listeners
-
-//inputSearch.addEventListener('click', handleInput);
 
 buttonSearch.addEventListener('click', handleTvSearch);
