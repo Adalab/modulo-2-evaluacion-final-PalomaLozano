@@ -43,12 +43,16 @@ function tvFavoriteSelected() {
     } else {
       favShowClass = '';
     }
-    putHTML += `<li class="title_list_title">${favEl.show.name}`;
+
+    putHTML += '<div class= "container_favorites">';
+
+    putHTML += `<li class="">${favEl.show.name}`;
     if (favEl.show.image) {
       putHTML += `<img src="${favEl.show.image.medium}" id="${favEl.show.id} class="title_list js_list" ${favShowClass}></li>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" id="${favEl.show.id}></li>`;
     }
+    putHTML += '</div>';
   }
   favoriteTitles.innerHTML = putHTML;
 }
@@ -102,9 +106,43 @@ function handleTvSearch() {
       tvListData = data;
 
       tvPaintedList();
+      prevent();
     });
+}
+
+function prevent(ev) {
+  ev.preventDefault();
 }
 
 //listener para buscar un elemento del api
 
 buttonSearch.addEventListener('click', handleTvSearch);
+
+//localstorage
+
+function setInLocalStorage() {
+  const stringData = JSON.stringify(tvListData);
+  localStorage.setItem('favorites', stringData);
+}
+
+function getFromApi() {
+  fetch('//api.tvmaze.com/search/shows?q=')
+    .then((response) => response.json())
+    .then((data) => {
+      tvListData = data.tvListData;
+      tvPaintedList();
+      setInLocalStorage();
+    });
+}
+
+function getLocalStorage() {
+  const localStoragetvListData = localStorage.getItem('tvListData');
+  if (localStoragetvListData === null) {
+    getFromApi();
+  } else {
+    const arraytvListData = JSON.parse(localStoragetvListData);
+    tvListData = arraytvListData;
+    tvPaintedList();
+  }
+}
+getLocalStorage();
