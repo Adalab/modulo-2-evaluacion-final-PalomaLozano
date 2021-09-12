@@ -35,7 +35,7 @@ function tvFavoriteSelected() {
   // for (let favElement of favorites) {
   // }
   let putHTML = '';
-  let favShowClass = '';
+  let favShowClass = 'favorites';
   for (let favEl of favorites) {
     const isFav = favoriteShow(favEl);
     if (isFav === true) {
@@ -50,7 +50,7 @@ function tvFavoriteSelected() {
     if (favEl.show.image) {
       putHTML += `<img src="${favEl.show.image.medium}" id="${favEl.show.id} class="title_list js_list" ${favShowClass}></li>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" id="${favEl.show.id}></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
     }
     putHTML += '</div>';
   }
@@ -86,6 +86,7 @@ function handleFavTvSelected(ev) {
 
   tvPaintedList();
   tvFavoriteSelected();
+  getLocalStorage();
 }
 
 //con esta función escucho al elemento que clicko y quiero añadir a favoritos
@@ -121,7 +122,7 @@ buttonSearch.addEventListener('click', handleTvSearch);
 //localstorage
 
 function setInLocalStorage() {
-  const stringData = JSON.stringify(tvListData);
+  const stringData = JSON.stringify(favorites);
   localStorage.setItem('favorites', stringData);
 }
 
@@ -129,19 +130,19 @@ function getFromApi() {
   fetch('//api.tvmaze.com/search/shows?q=')
     .then((response) => response.json())
     .then((data) => {
-      tvListData = data.tvListData;
+      favorites = data.favorites;
       tvPaintedList();
       setInLocalStorage();
     });
 }
 
 function getLocalStorage() {
-  const localStoragetvListData = localStorage.getItem('tvListData');
-  if (localStoragetvListData === null) {
+  const localStoragefavorites = localStorage.getItem('favorites');
+  if (localStoragefavorites === null) {
     getFromApi();
   } else {
-    const arraytvListData = JSON.parse(localStoragetvListData);
-    tvListData = arraytvListData;
+    const arrayfavorites = JSON.parse(localStoragefavorites);
+    favorites = arrayfavorites;
     tvPaintedList();
   }
 }
