@@ -23,7 +23,7 @@ function tvPaintedList() {
     if (tvTitles.show.image) {
       putHTML += `<img src="${tvTitles.show.image.medium}" class="title_list js_list"  ${favShowClass} id="${tvTitles.show.id}>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" ${favShowClass} id="${tvTitles.show.id}></li>`;
     }
   }
 
@@ -49,7 +49,7 @@ function tvFavoriteSelected() {
     if (favEl.show.image) {
       putHTML += `<img src="${favEl.show.image.medium}" id="${favEl.show.id} class="title_list js_list" ${favShowClass}></li>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" ${favShowClass} id="${favEl.show.id}></li>`;
     }
     putHTML += '</div>';
   }
@@ -122,6 +122,7 @@ function reset() {
   listTitles.innerHTML = '';
   favoriteTitles.innerHTML = '';
 }
+
 //localstorage
 
 function setInLocalStorage() {
