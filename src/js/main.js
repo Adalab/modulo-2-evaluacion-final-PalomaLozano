@@ -21,7 +21,7 @@ function tvPaintedList() {
     }
     putHTML += `<li class="title_list_title">${tvTitles.show.name}`;
     if (tvTitles.show.image) {
-      putHTML += `<img src="${tvTitles.show.image.medium}" class="title_list js_list"  ${favShowClass} id="${tvTitles.show.id}></li>`;
+      putHTML += `<img src="${tvTitles.show.image.medium}" class="title_list js_list"  ${favShowClass} id="${tvTitles.show.id}>`;
     } else {
       putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
     }
@@ -76,7 +76,6 @@ function handleFavTvSelected(ev) {
   const findFav = favorites.findIndex((fav) => {
     return fav.show.id === selectedFav;
   });
-  console.log(favorites);
   if (findFav === -1) {
     favorites.push(clickedFav);
   } else {
@@ -150,4 +149,5 @@ function getLocalStorage() {
     tvPaintedList();
   }
 }
+
 getLocalStorage();
