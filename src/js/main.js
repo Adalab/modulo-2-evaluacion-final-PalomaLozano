@@ -1,9 +1,10 @@
 'use strict';
 
-const inputSearch = document.querySelector('.js_search_input'); // variable global para buscador
-const buttonSearch = document.querySelector('.js_button_search'); //variable global botón buscar
+const inputSearch = document.querySelector('.js_search_input');
+const buttonSearch = document.querySelector('.js_button_search');
 const listTitles = document.querySelector('.js_ul_titles');
 const favoriteTitles = document.querySelector('.js_ul_favorite');
+const resetButton = document.querySelector('.js_reset');
 
 let tvListData = [];
 let favorites = [];
@@ -32,10 +33,8 @@ function tvPaintedList() {
 }
 
 function tvFavoriteSelected() {
-  // for (let favElement of favorites) {
-  // }
   let putHTML = '';
-  let favShowClass = 'favorites';
+  let favShowClass = '';
   for (let favEl of favorites) {
     const isFav = favoriteShow(favEl);
     if (isFav === true) {
@@ -92,8 +91,8 @@ function handleFavTvSelected(ev) {
 //con esta función escucho al elemento que clicko y quiero añadir a favoritos
 function listenTvFavSelected() {
   const listFavorites = document.querySelectorAll('.js_list');
-
   for (const favEl of listFavorites) {
+    favEl.classList.add('show');
     favEl.addEventListener('click', handleFavTvSelected);
   }
 }
@@ -118,7 +117,12 @@ function prevent(ev) {
 //listener para buscar un elemento del api
 
 buttonSearch.addEventListener('click', handleTvSearch);
+resetButton.addEventListener('click', reset);
 
+function reset() {
+  listTitles.innerHTML = '';
+  favoriteTitles.innerHTML = '';
+}
 //localstorage
 
 function setInLocalStorage() {
@@ -130,7 +134,7 @@ function getFromApi() {
   fetch('//api.tvmaze.com/search/shows?q=')
     .then((response) => response.json())
     .then((data) => {
-      favorites = data.favorites;
+      favorites = data;
       tvPaintedList();
       setInLocalStorage();
     });
