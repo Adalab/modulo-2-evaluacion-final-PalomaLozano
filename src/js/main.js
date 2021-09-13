@@ -23,7 +23,7 @@ function tvPaintedList() {
     if (tvTitles.show.image) {
       putHTML += `<img src="${tvTitles.show.image.medium}" class="title_list js_list"  ${favShowClass} id="${tvTitles.show.id}>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" ${favShowClass} id="${tvTitles.show.id}></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
     }
   }
 
@@ -34,7 +34,7 @@ function tvPaintedList() {
 
 function tvFavoriteSelected() {
   let putHTML = '';
-  let favShowClass = '';
+  let favShowClass = 'favorites';
   for (let favEl of favorites) {
     const isFav = favoriteShow(favEl);
     if (isFav === true) {
@@ -47,9 +47,9 @@ function tvFavoriteSelected() {
 
     putHTML += `<li class="">${favEl.show.name}`;
     if (favEl.show.image) {
-      putHTML += `<img src="${favEl.show.image.medium}" id="${favEl.show.id} class="title_list js_list" ${favShowClass}></li>`;
+      putHTML += `<img src="${favEl.show.image.medium}" id="${favEl.show.id} class="title_list js_list" ${favShowClass}>`;
     } else {
-      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV" ${favShowClass} id="${favEl.show.id}></li>`;
+      putHTML += `<img src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
     }
     putHTML += '</div>';
   }
@@ -74,8 +74,11 @@ function handleFavTvSelected(ev) {
   });
 
   const findFav = favorites.findIndex((fav) => {
+    console.log(fav.show.id);
+
     return fav.show.id === selectedFav;
   });
+
   if (findFav === -1) {
     favorites.push(clickedFav);
   } else {
@@ -84,8 +87,7 @@ function handleFavTvSelected(ev) {
 
   tvPaintedList();
   tvFavoriteSelected();
-  getLocalStorage();
-  prevent();
+  setInLocalStorage();
 }
 
 //con esta función escucho al elemento que clicko y quiero añadir a favoritos
@@ -98,7 +100,8 @@ function listenTvFavSelected() {
 }
 
 //función del api, aquí solo recojo la info que quiero mostrar en la web
-function handleTvSearch() {
+function handleTvSearch(ev) {
+  prevent(ev);
   let textUser = inputSearch.value;
   fetch('//api.tvmaze.com/search/shows?q=' + textUser)
     .then((response) => response.json())
@@ -106,7 +109,6 @@ function handleTvSearch() {
       tvListData = data;
 
       tvPaintedList();
-      prevent();
     });
 }
 
@@ -123,7 +125,6 @@ function reset() {
   listTitles.innerHTML = '';
   favoriteTitles.innerHTML = '';
 }
-
 //localstorage
 
 function setInLocalStorage() {
@@ -131,25 +132,12 @@ function setInLocalStorage() {
   localStorage.setItem('favorites', stringData);
 }
 
-function getFromApi() {
-  fetch('//api.tvmaze.com/search/shows?q=')
-    .then((response) => response.json())
-    .then((data) => {
-      favorites = data;
-      tvPaintedList();
-      setInLocalStorage();
-    });
-}
-
 function getLocalStorage() {
   const localStoragefavorites = localStorage.getItem('favorites');
-  if (localStoragefavorites === null) {
-    getFromApi();
-  } else {
+  if (localStoragefavorites !== null) {
     const arrayfavorites = JSON.parse(localStoragefavorites);
     favorites = arrayfavorites;
-    tvPaintedList();
+    tvFavoriteSelected();
   }
 }
-
 getLocalStorage();
