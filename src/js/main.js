@@ -85,6 +85,7 @@ function handleFavTvSelected(ev) {
   tvPaintedList();
   tvFavoriteSelected();
   getLocalStorage();
+  prevent();
 }
 
 //con esta función escucho al elemento que clicko y quiero añadir a favoritos
